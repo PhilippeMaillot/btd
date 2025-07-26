@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Éditeur de chemin</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 20px; }
+    canvas { border: 2px solid #aaa; background: #f0f0f0; cursor: crosshair; }
+    textarea { width: 80%; height: 150px; margin-top: 10px; font-family: monospace; }
+    button { margin: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🗺️ Créateur de chemin - BloonTD Style</h1>
+  <canvas id="editor" width="1300" height="750"></canvas><br>
+  <button onclick="copyPath()">📋 Copier le chemin</button>
+  <button onclick="clearPath()">🗑️ Réinitialiser</button>
+  <textarea id="output" readonly></textarea>
+
+  <script src="./src/map-editor.js"></script>
+</body>
+</html>

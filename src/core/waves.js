@@ -40,5 +40,5 @@ export const WAVES = [
   [{ tier: 15, count: 19 }, { tier: 16, count: 9 }],
   [{ tier: 15, count: 21 }, { tier: 16, count: 11 }],
   [{ tier: 15, count: 23 }, { tier: 16, count: 13 }],
-  [{ tier: 15, count: 25 }, { tier: 16, count: 15 }],
+  [{ tier: 15, count: 25 }, { tier: 16, count: 15 }]
 ];

@@ -15,5 +15,6 @@ export const BLOON_TIERS = {
   14: { color: "#000000", speed: 7, health: 20, name: "Obsidienne", onDeathSpawnLowerTier: true },
   15: { color: "#FFD700", speed: 8, health: 25, name: "Or", onDeathSpawnLowerTier: true },
   16: { color: "#d34f4f9a", speed: 15, health: 50, name: "speedo", onDeathSpawnLowerTier: false },
-  17: { color: "#584fd39a", speed: 0.5, health: 250, name: "slow", onDeathSpawnLowerTier: false }
+  17: { color: "#584fd39a", speed: 0.5, health: 250, name: "slow", onDeathSpawnLowerTier: false },
+  18: { image: "../assets/images/boulet.png", speed: 0, health: 1, name: "Boomerang", onDeathSpawnLowerTier: false }
 };

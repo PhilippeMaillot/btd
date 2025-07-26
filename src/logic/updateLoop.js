@@ -4,20 +4,37 @@ import { Tower } from "../core/tower.js";
 import { distance } from "../logic/utils.js";
 import { updateHUD } from "../ui/hud.js";
 import { getSelectedPath } from "../config/path.js";
+const pathImage = new Image();
+pathImage.src = "../assets/images/rock2.png";
 const path = getSelectedPath();
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 function drawPath() {
-  ctx.strokeStyle = "#405b3c";
-  ctx.lineWidth = 40;
-  ctx.beginPath();
-  ctx.moveTo(path[0].x, path[0].y);
-  for (let point of path.slice(1)) {
-    ctx.lineTo(point.x, point.y);
+  if (!pathImage.complete) return;
+
+  for (let i = 0; i < path.length - 1; i++) {
+    const p1 = path[i];
+    const p2 = path[i + 1];
+
+    const dx = p2.x - p1.x;
+    const dy = p2.y - p1.y;
+    const angle = Math.atan2(dy, dx);
+    const distance = Math.hypot(dx, dy);
+    const tileSize = 40;
+
+    for (let j = 0; j < distance; j += tileSize) {
+      const x = p1.x + (dx / distance) * j;
+      const y = p1.y + (dy / distance) * j;
+
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+      ctx.drawImage(pathImage, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
+      ctx.restore();
+    }
   }
-  ctx.stroke();
 }
 
 function drawPops() {

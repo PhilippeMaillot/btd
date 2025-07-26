@@ -65,7 +65,7 @@ h1 {
 canvas {
     display: block;
     border-radius: 8px;
-    background: url('/public/images/background.png') no-repeat center / cover;
+    background: url('../public/images/background.png') no-repeat center / cover;
 }
 
 .delete-btn {

@@ -50,7 +50,7 @@ canvas {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   max-width: calc(100vw - 160px);
   /* image de fond pour le chemin qui fit le canvas qui fait 800 par 500 */
-  background: url('/public/images/background.png') no-repeat center / cover;
+  background: url('../public/images/background.png') no-repeat center / cover;
   /* espace pour #shop */
 }
 

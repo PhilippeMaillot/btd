@@ -1,0 +1,82 @@
+<!-- btd/select-map.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Choix de la carte</title>
+  <link rel="stylesheet" href="./style/style.css">
+  <style>
+    .map-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 2rem;
+    }
+
+    .map-preview {
+      border: 3px solid #aad4b1;
+      border-radius: 10px;
+      background: #fef6f9;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .map-preview:hover {
+      transform: scale(1.05);
+    }
+
+    canvas {
+      display: block;
+      border-radius: 8px;
+      background: #d0f0ea;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: sans-serif;
+      color: #405b3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Choisis ta carte</h1>
+  <div class="map-container" id="mapContainer"></div>
+
+  <script type="module">
+    import { allPaths } from './src/config/path.js';
+
+    const container = document.getElementById('mapContainer');
+
+    Object.entries(allPaths).forEach(([key, path]) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 150;
+      const ctx = canvas.getContext('2d');
+
+      // Dessin du path
+      ctx.strokeStyle = "#405b3c";
+      ctx.lineWidth = 20;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(path[0].x / 4, path[0].y / 4); // On scale le path
+      for (let point of path.slice(1)) {
+        ctx.lineTo(point.x / 4, point.y / 4);
+      }
+      ctx.stroke();
+
+      // Container clickable
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('map-preview');
+      wrapper.appendChild(canvas);
+      wrapper.onclick = () => {
+        localStorage.setItem('selectedMap', key);
+        window.location.href = 'index.html'; // redirection
+      };
+
+      container.appendChild(wrapper);
+    });
+  </script>
+</body>
+</html>

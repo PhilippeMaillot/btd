@@ -1,0 +1,19 @@
+export const BLOON_TIERS = {
+  1: { color: "#e74c3c", speed: 1.5, health: 1, name: "Rouge", onDeathSpawnLowerTier: false },
+  2: { color: "#3498db", speed: 2, health: 2, name: "Bleu", onDeathSpawnLowerTier: true },
+  3: { color: "#2ecc71", speed: 2.5, health: 3, name: "Vert", onDeathSpawnLowerTier: true },
+  4: { color: "#f1c40f", speed: 3, health: 4, name: "Jaune", onDeathSpawnLowerTier: true },
+  5: { color: "#e67e22", speed: 3.5, health: 5, name: "Orange", onDeathSpawnLowerTier: true },
+  6: { color: "#9b59b6", speed: 4, health: 6, name: "Violet", onDeathSpawnLowerTier: true },
+  7: { color: "#1abc9c", speed: 4.2, health: 7, name: "Turquoise", onDeathSpawnLowerTier: true },
+  8: { color: "#95a5a6", speed: 4.5, health: 8, name: "Gris", onDeathSpawnLowerTier: true },
+  9: { color: "#34495e", speed: 5, health: 9, name: "Noir", onDeathSpawnLowerTier: true },
+  10: { color: "#ffffff", speed: 5.5, health: 10, name: "Blanc", onDeathSpawnLowerTier: true },
+  11: { color: "#ff00ff", speed: 5.7, health: 12, name: "Magenta", onDeathSpawnLowerTier: true },
+  12: { color: "#00ffff", speed: 6, health: 14, name: "Cyan", onDeathSpawnLowerTier: true },
+  13: { color: "#ff8800", speed: 6.5, health: 17, name: "Lave", onDeathSpawnLowerTier: true },
+  14: { color: "#000000", speed: 7, health: 20, name: "Obsidienne", onDeathSpawnLowerTier: true },
+  15: { color: "#FFD700", speed: 8, health: 25, name: "Or", onDeathSpawnLowerTier: true },
+  16: { color: "#d34f4f9a", speed: 15, health: 50, name: "speedo", onDeathSpawnLowerTier: false },
+  17: { color: "#584fd39a", speed: 0.5, health: 250, name: "slow", onDeathSpawnLowerTier: false }
+};

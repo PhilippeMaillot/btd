@@ -26,7 +26,7 @@ export class BoomerangProjectile {
     // Chargement de l'image si ce n’est pas déjà fait
     if (!BoomerangProjectile.image) {
       BoomerangProjectile.image = new Image();
-      BoomerangProjectile.image.src = "../assets/images/boomerang.png";
+      BoomerangProjectile.image.src = "./public/images/boomerang.png";
     }
   }
 

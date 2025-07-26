@@ -1,7 +1,7 @@
 import { Projectile } from "../projectile.js";
 
 const baseImage = new Image();
-baseImage.src = "../assets/images/snipbullet.png";
+baseImage.src = "./public/images/snipbullet.png";
 
 export default {
   cooldown: 1800,

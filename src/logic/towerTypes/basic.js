@@ -2,7 +2,7 @@ import { Projectile } from "../projectile.js";
 import { distance } from "../utils.js";
 
 const baseImage = new Image();
-baseImage.src = "../assets/images/baseproj.png";
+baseImage.src = "./public/images/baseproj.png";
 
 export default {
   cooldown: 1000,

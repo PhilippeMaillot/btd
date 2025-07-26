@@ -5,7 +5,7 @@ import { distance } from "../logic/utils.js";
 import { updateHUD } from "../ui/hud.js";
 import { getSelectedPath } from "../config/path.js";
 const pathImage = new Image();
-pathImage.src = "../assets/images/rock2.png";
+pathImage.src = "./public/images/rock2.png";
 const path = getSelectedPath();
 
 const canvas = document.getElementById("game");

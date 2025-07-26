@@ -1,7 +1,7 @@
 import { Projectile } from "../projectile.js";
 import { distance } from "../utils.js";
 const blastImage = new Image();
-blastImage.src = "../assets/images/baseproj.png";
+blastImage.src = "./public/images/baseproj.png";
 
 export default {
   cooldown: 900,

@@ -13,12 +13,12 @@ export class Tower {
   };
 
   static loadImages() {
-    this.images.basic.src = "assets/images/tower_basic.png";
-    this.images.fast.src = "assets/images/tower_fast.png";
-    this.images.sniper.src = "assets/images/tower_sniper.png";
-    this.images.blast.src = "assets/images/tower_blast.png";
-    this.images.boomerang.src = "assets/images/tower_boomerang.png";
-    // ➕ Charger d'autres assets ici si besoin
+    this.images.basic.src = "public/images/tower_basic.png";
+    this.images.fast.src = "public/images/tower_fast.png";
+    this.images.sniper.src = "public/images/tower_sniper.png";
+    this.images.blast.src = "public/images/tower_blast.png";
+    this.images.boomerang.src = "public/images/tower_boomerang.png";
+    // ➕ Charger d'autres public ici si besoin
   }
 
   constructor(x, y, type = "basic") {

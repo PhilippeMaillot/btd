@@ -4,26 +4,6 @@
   <meta charset="UTF-8">
   <title>Choix de la carte</title>
   <link rel="stylesheet" href="./style/select-map.css" />
-  <style>
-    .delete-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background-color: #ffebeb;
-      border: 2px solid #ff7c7c;
-      border-radius: 8px;
-      color: #a00000;
-      font-weight: bold;
-      cursor: pointer;
-      padding: 4px 8px;
-      font-size: 12px;
-      transition: background-color 0.2s ease;
-    }
-
-    .delete-btn:hover {
-      background-color: #ffc0c0;
-    }
-  </style>
 </head>
 
 <body>
@@ -39,7 +19,6 @@
 
     const container = document.getElementById('mapContainer');
 
-    // Crée une carte avec éventuel bouton de suppression
     function createMapCanvas(key, path, isCustom = false) {
       const canvas = document.createElement('canvas');
       canvas.width = 325;
@@ -56,10 +35,15 @@
       }
       ctx.stroke();
 
+      const label = document.createElement('div');
+      label.className = 'map-label';
+      label.textContent = key;
+
       const wrapper = document.createElement('div');
       wrapper.classList.add('map-preview');
       wrapper.title = key;
 
+      wrapper.appendChild(label);
       wrapper.appendChild(canvas);
 
       if (isCustom) {
@@ -67,7 +51,7 @@
         deleteBtn.className = 'delete-btn';
         deleteBtn.textContent = '🗑️';
         deleteBtn.onclick = (e) => {
-          e.stopPropagation(); // Empêche le click sur la carte
+          e.stopPropagation();
           if (confirm(`Supprimer la carte "${key}" ?`)) {
             const customMaps = JSON.parse(localStorage.getItem("customMaps") || "{}");
             delete customMaps[key];
@@ -87,12 +71,12 @@
       container.appendChild(wrapper);
     }
 
-    // Maps par défaut
+    // Cartes par défaut
     Object.entries(allPaths).forEach(([key, path]) => {
       createMapCanvas(key, path, false);
     });
 
-    // Maps custom
+    // Cartes custom depuis localStorage
     const customMaps = JSON.parse(localStorage.getItem("customMaps") || "{}");
     Object.entries(customMaps).forEach(([key, path]) => {
       if (Array.isArray(path) && path.length > 0 && path[0].x !== undefined) {

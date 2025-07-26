@@ -1,47 +1,37 @@
-<!-- btd/select-map.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>Choix de la carte</title>
-  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/select-map.css" />
   <style>
-    .map-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      padding: 2rem;
-    }
-
-    .map-preview {
-      border: 3px solid #aad4b1;
-      border-radius: 10px;
-      background: #fef6f9;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .map-preview:hover {
-      transform: scale(1.05);
-    }
-
-    canvas {
-      display: block;
+    .delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background-color: #ffebeb;
+      border: 2px solid #ff7c7c;
       border-radius: 8px;
-      background: #d0f0ea;
+      color: #a00000;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 12px;
+      transition: background-color 0.2s ease;
     }
 
-    h1 {
-      text-align: center;
-      font-family: sans-serif;
-      color: #405b3c;
+    .delete-btn:hover {
+      background-color: #ffc0c0;
     }
   </style>
 </head>
+
 <body>
-  <h1>Choisis ta carte</h1>
+  <div class="header">
+    <h1>🗺️ Choisis ta carte</h1>
+    <a href="map-editor.html" class="editor-button">+ Créer une nouvelle</a>
+  </div>
+
   <div class="map-container" id="mapContainer"></div>
 
   <script type="module">
@@ -49,33 +39,65 @@
 
     const container = document.getElementById('mapContainer');
 
-    Object.entries(allPaths).forEach(([key, path]) => {
+    // Crée une carte avec éventuel bouton de suppression
+    function createMapCanvas(key, path, isCustom = false) {
       const canvas = document.createElement('canvas');
-      canvas.width = 200;
-      canvas.height = 150;
+      canvas.width = 325;
+      canvas.height = 225;
       const ctx = canvas.getContext('2d');
 
-      // Dessin du path
       ctx.strokeStyle = "#405b3c";
-      ctx.lineWidth = 20;
+      ctx.lineWidth = 5;
       ctx.lineJoin = "round";
       ctx.beginPath();
-      ctx.moveTo(path[0].x / 4, path[0].y / 4); // On scale le path
+      ctx.moveTo(path[0].x / 3.3, path[0].y / 3.3);
       for (let point of path.slice(1)) {
-        ctx.lineTo(point.x / 4, point.y / 4);
+        ctx.lineTo(point.x / 3.3, point.y / 3.3);
       }
       ctx.stroke();
 
-      // Container clickable
       const wrapper = document.createElement('div');
       wrapper.classList.add('map-preview');
+      wrapper.title = key;
+
       wrapper.appendChild(canvas);
+
+      if (isCustom) {
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = '🗑️';
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation(); // Empêche le click sur la carte
+          if (confirm(`Supprimer la carte "${key}" ?`)) {
+            const customMaps = JSON.parse(localStorage.getItem("customMaps") || "{}");
+            delete customMaps[key];
+            localStorage.setItem("customMaps", JSON.stringify(customMaps));
+            location.reload();
+          }
+        };
+        wrapper.appendChild(deleteBtn);
+      }
+
       wrapper.onclick = () => {
         localStorage.setItem('selectedMap', key);
-        window.location.href = 'index.html'; // redirection
+        localStorage.setItem('selectedMapIsCustom', isCustom);
+        window.location.href = 'index.html';
       };
 
       container.appendChild(wrapper);
+    }
+
+    // Maps par défaut
+    Object.entries(allPaths).forEach(([key, path]) => {
+      createMapCanvas(key, path, false);
+    });
+
+    // Maps custom
+    const customMaps = JSON.parse(localStorage.getItem("customMaps") || "{}");
+    Object.entries(customMaps).forEach(([key, path]) => {
+      if (Array.isArray(path) && path.length > 0 && path[0].x !== undefined) {
+        createMapCanvas(key, path, true);
+      }
     });
   </script>
 </body>

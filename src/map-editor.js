@@ -97,9 +97,30 @@ function draw() {
   }
 }
 
+function saveToLocal() {
+  const name = document.getElementById("mapName").value.trim();
+  if (!name) {
+    alert("Merci de donner un nom à la carte avant de l’enregistrer.");
+    return;
+  }
+
+  const savedMaps = JSON.parse(localStorage.getItem("customMaps") || "{}");
+
+  if (savedMaps[name]) {
+    const overwrite = confirm(`Une carte nommée "${name}" existe déjà. Écraser ?`);
+    if (!overwrite) return;
+  }
+
+  savedMaps[name] = path;
+  localStorage.setItem("customMaps", JSON.stringify(savedMaps));
+
+  alert(`Carte "${name}" enregistrée avec succès !`);
+}
+
 function updateOutput() {
+  const name = document.getElementById("mapName").value || "newMap";
   const formatted = path.map(p => `  { x: ${p.x}, y: ${p.y} }`).join(",\n");
-  output.value = "[\n" + formatted + "\n]";
+  output.value = `${name}: [\n${formatted}\n]`;
 }
 
 function copyPath() {

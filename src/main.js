@@ -6,12 +6,34 @@ import { updateHUD, updateShopAffordability } from "./ui/hud.js";
 import { state } from "./logic/state.js";
 
 const canvas = document.getElementById("game");
-const rect = canvas.getBoundingClientRect();
+const ctx = canvas.getContext("2d");
 
+// Surface logique fixe (dessin interne)
+canvas.width = 1300;
+canvas.height = 750;
+
+let canvasScale = 1;
+
+// Fonction pour rendre le canvas visuellement responsive
+function resizeCanvas() {
+  const maxWidth = window.innerWidth - 500; // 160 = largeur #shop
+  const scale = Math.min(maxWidth / 1300, window.innerHeight / 750);
+  canvas.style.width = `${1300 * scale}px`;
+  canvas.style.height = `${750 * scale}px`;
+  canvasScale = scale;
+}
+
+// Appel au chargement et au redimensionnement
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+// Chargement des images
 Tower.loadImages();
 
+// Lancement de la vague
 document.getElementById("startWave").onclick = startWave;
 
+// Sélection de tourelles
 document.querySelectorAll(".tower-card").forEach(card => {
   card.addEventListener("click", () => {
     state.PlacingTower = {
@@ -22,16 +44,26 @@ document.querySelectorAll(".tower-card").forEach(card => {
   });
 });
 
+// Position souris convertie en coordonnées logiques
+function getMousePos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / canvasScale;
+  const y = (e.clientY - rect.top) / canvasScale;
+  return { x, y };
+}
+
+// Placement d'une tourelle temporaire
 canvas.addEventListener("mousemove", e => {
   if (state.PlacingTower) {
-    state.PlacingTower.x = e.clientX - rect.left;
-    state.PlacingTower.y = e.clientY - rect.top;
+    const { x, y } = getMousePos(e);
+    state.PlacingTower.x = x;
+    state.PlacingTower.y = y;
   }
 });
 
+// Clic pour placer ou sélectionner
 canvas.addEventListener("click", e => {
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+  const { x, y } = getMousePos(e);
 
   if (state.PlacingTower) {
     let price = 50;
@@ -40,7 +72,7 @@ canvas.addEventListener("click", e => {
     else if (state.PlacingTower.type === "blast") price = 100;
 
     if (state.money >= price) {
-      state.towers.push(new Tower(state.PlacingTower.x, state.PlacingTower.y, state.PlacingTower.type));
+      state.towers.push(new Tower(x, y, state.PlacingTower.type));
       state.money -= price;
       updateHUD();
       updateShopAffordability();
@@ -52,4 +84,5 @@ canvas.addEventListener("click", e => {
   handleTowerSelection(x, y);
 });
 
+// Boucle de jeu
 updateGame();

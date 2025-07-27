@@ -1,5 +1,9 @@
 import { BLOON_TIERS } from "./bloonTiers.js";
 
+// 1. Charger le son de pop (à faire une seule fois pour éviter le recharger à chaque hit)
+const popSound = new Audio("public/audio/bloon_pop.mp3"); // adapte le chemin si besoin
+popSound.volume = 0.6;
+
 export class Bloon {
   constructor(x, y, path, tier = 1) {
     this.x = x;
@@ -54,11 +58,20 @@ export class Bloon {
     this.health -= damage;
 
     if (this.health <= 0) {
+      // 2. Jouer le son quand le bloon éclate
+      try {
+        popSound.currentTime = 0;
+        popSound.play();
+      } catch (e) {
+        // fail silently si le navigateur bloque l'autoplay
+      }
+
       if (this.onDeathSpawnLowerTier && this.tier > 1) {
         const newBloon = new Bloon(this.x, this.y, this.path, this.tier - 1);
         newBloon.pathIndex = this.pathIndex;
         bloons.push(newBloon);
       }
+
       this.dead = true;
     }
   }
